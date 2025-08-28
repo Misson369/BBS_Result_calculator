@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BBS Result Calculator</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    max-width: 1000px;
+    margin: 20px auto;
+    padding: 15px;
+    background-color: #f7f7f7;
+    color: #333;
+  }
+  h1, h2, h3 { text-align: center; color: #2c3e50; }
+
+  form {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    margin-bottom: 20px;
+  }
+
+  label {
+    display: flex;
+    align-items: center;
+    margin: 8px 0;
+    font-weight: bold;
+  }
+  label span { display: inline-block; width: 250px; }
+  input[type="number"] {
+    width: 70px;
+    padding: 5px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+  }
+  button {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    margin-top: 15px;
+    background-color: #3498db;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background 0.3s;
+  }
+  button:hover { background-color: #2980b9; }
+
+  /* Result Grid Layout with explicit rows */
+  #result { display: flex; flex-direction: column; gap: 15px; }
+
+  .year-row {
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+  }
+  .year-card {
+    flex: 1 1 calc(50% - 15px);
+    background-color: #fff;
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+    font-size: 14px;
+  }
+  th, td {
+    border: 1px solid #ccc;
+    padding: 6px;
+    text-align: center;
+  }
+  th { background-color: #3498db; color: #fff; }
+
+  .pass { color: #27ae60; font-weight: bold; }
+  .fail { color: #e74c3c; font-weight: bold; }
+
+  .division-box {
+    margin-top: 10px;
+    text-align: center;
+    padding: 8px;
+    border-radius: 8px;
+    font-weight: bold;
+    background: #ecf0f1;
+    font-size: 14px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+  }
+  .division-box span { font-weight: bold; }
+
+  .distinction { color: #27ae60; }
+  .first { color: #2980b9; }
+  .second { color: #f39c12; }
+  .third { color: #8e44ad; }
+  .fail-division { color: #e74c3c; }
+
+  @media (max-width: 700px) {
+    .year-card { flex: 1 1 100%; }
+    label span { width: 140px; }
+    input[type="number"] { width: 50px; }
+    table { font-size: 12px; }
+  }
+</style>
+</head>
+<body>
+
+<h1>BBS Result Calculator</h1>
+<p style="text-align:center;">Enter marks for a specific year or all years.</p>
+
+<form id="bbsForm">
+  <h3>First Year (5 subjects, 100 marks each)</h3>
+  <label><span>Business English:</span> <input type="number" name="fy1" min="0" max="100"></label>
+  <label><span>Business Statistics:</span> <input type="number" name="fy2" min="0" max="100"></label>
+  <label><span>Microeconomics:</span> <input type="number" name="fy3" min="0" max="100"></label>
+  <label><span>Financial Accounting:</span> <input type="number" name="fy4" min="0" max="100"></label>
+  <label><span>Principles of Management:</span> <input type="number" name="fy5" min="0" max="100"></label>
+
+  <h3>Second Year (5 subjects, 100 marks each)</h3>
+  <label><span>Business Communication:</span> <input type="number" name="sy1" min="0" max="100"></label>
+  <label><span>Macroeconomics:</span> <input type="number" name="sy2" min="0" max="100"></label>
+  <label><span>Cost & Management Accounting:</span> <input type="number" name="sy3" min="0" max="100"></label>
+  <label><span>Organizational Behavior & HRM:</span> <input type="number" name="sy4" min="0" max="100"></label>
+  <label><span>Fundamentals of Financial Management:</span> <input type="number" name="sy5" min="0" max="100"></label>
+
+  <h3>Third Year (5 subjects, 100 marks each)</h3>
+  <label><span>Business Law:</span> <input type="number" name="ty1" min="0" max="100"></label>
+  <label><span>Foundation of Financial Systems:</span> <input type="number" name="ty2" min="0" max="100"></label>
+  <label><span>Business Environment & Strategy:</span> <input type="number" name="ty3" min="0" max="100"></label>
+  <label><span>Taxation in Nepal:</span> <input type="number" name="ty4" min="0" max="100"></label>
+  <label><span>Fundamentals of Marketing:</span> <input type="number" name="ty5" min="0" max="100"></label>
+
+  <h3>Fourth Year (500 marks)</h3>
+  <label><span>Entrepreneurship:</span> <input type="number" name="fy1_4" min="0" max="100"></label>
+  <label><span>Concentration 1:</span> <input type="number" name="fy2_4" min="0" max="100"></label>
+  <label><span>Concentration 2:</span> <input type="number" name="fy3_4" min="0" max="100"></label>
+  <label><span>Concentration 3:</span> <input type="number" name="fy4_4" min="0" max="100"></label>
+  <label><span>Research Methods:</span> <input type="number" name="fy5_4" min="0" max="50"></label>
+  <label><span>Final Project:</span> <input type="number" name="fy6_4" min="0" max="50"></label><br>
+
+  <button type="submit">Calculate Result</button>
+</form>
+
+<div id="result"></div>
+
+<script>
+const form = document.getElementById("bbsForm");
+
+const subjectNames = {
+  fy1:"Business English", fy2:"Business Statistics", fy3:"Microeconomics",
+  fy4:"Financial Accounting", fy5:"Principles of Management",
+  sy1:"Business Communication", sy2:"Macroeconomics", sy3:"Cost & Management Accounting",
+  sy4:"Organizational Behavior & HRM", sy5:"Fundamentals of Financial Management",
+  ty1:"Business Law", ty2:"Foundation of Financial Systems", ty3:"Business Environment & Strategy",
+  ty4:"Taxation in Nepal", ty5:"Fundamentals of Marketing",
+  fy1_4:"Entrepreneurship", fy2_4:"Concentration 1", fy3_4:"Concentration 2",
+  fy4_4:"Concentration 3", fy5_4:"Research Methods", fy6_4:"Final Project"
+};
+
+form.addEventListener("submit", function(e){
+  e.preventDefault();
+  const resultDiv = document.getElementById("result");
+  resultDiv.innerHTML = "";
+
+  const years = [
+    { name:"First Year", keys:["fy1","fy2","fy3","fy4","fy5"], maxMarks:[100,100,100,100,100] },
+    { name:"Second Year", keys:["sy1","sy2","sy3","sy4","sy5"], maxMarks:[100,100,100,100,100] },
+    { name:"Third Year", keys:["ty1","ty2","ty3","ty4","ty5"], maxMarks:[100,100,100,100,100] },
+    { name:"Fourth Year", keys:["fy1_4","fy2_4","fy3_4","fy4_4","fy5_4","fy6_4"], maxMarks:[100,100,100,100,50,50] }
+  ];
+
+  let overallObtained = 0, overallMax = 0, overallFail = false;
+
+  const row1 = document.createElement("div"); row1.className="year-row";
+  const row2 = document.createElement("div"); row2.className="year-row";
+
+  years.forEach((y,i) => {
+    const marksEntered = y.keys.map(k=>Number(form.elements[k].value)).filter(v=>!isNaN(v)&&v!==0);
+    if(marksEntered.length===0) return;
+
+    let total=0, maxTotal=0, fail=false;
+    const subjects=[];
+
+    y.keys.forEach((key,j)=>{
+      const val=Number(form.elements[key].value);
+      if(isNaN(val)||val===0) return;
+      const percent = (val/y.maxMarks[j])*100;
+      if(percent<35) fail=true;
+      total+=val; maxTotal+=y.maxMarks[j];
+      subjects.push({name:subjectNames[key], obtained:val, max:y.maxMarks[j], percent, status: percent<35?"Fail":"Pass"});
+    });
+
+    overallObtained+=total; overallMax+=maxTotal; if(fail) overallFail=true;
+
+    const card = document.createElement("div"); card.className="year-card";
+    let html=`<h3>${y.name}</h3><table><tr><th>Subject</th><th>Obtained</th><th>Max</th><th>Percentage</th><th>Status</th></tr>`;
+    subjects.forEach(sub=>{
+      html+=`<tr><td>${sub.name}</td><td>${sub.obtained}</td><td>${sub.max}</td><td>${sub.percent.toFixed(2)}%</td>
+      <td class="${sub.status==="Fail"?"fail":"pass"}">${sub.status}</td></tr>`;
+    });
+    html+=`</table>`;
+
+    const yrPercent=(total/maxTotal)*100;
+    let division="", divClass="";
+    if(fail){ division="Fail"; divClass="fail-division"; }
+    else if(yrPercent>=75){ division="Distinction"; divClass="distinction"; }
+    else if(yrPercent>=60){ division="First Division"; divClass="first"; }
+    else if(yrPercent>=45){ division="Second Division"; divClass="second"; }
+    else if(yrPercent>=35){ division="Third Division"; divClass="third"; }
+
+    html+=`<div class="division-box ${divClass}">
+      <span>Total: ${total} / ${maxTotal}</span>
+      <span>Percentage: ${yrPercent.toFixed(2)}%</span>
+      <span>Division: ${division}</span>
+    </div>`;
+
+    card.innerHTML = html;
+
+    // Append to appropriate row (1st & 2nd year -> row1, 3rd & 4th -> row2)
+    if(i < 2) row1.appendChild(card);
+    else row2.appendChild(card);
+  });
+
+  resultDiv.appendChild(row1);
+  resultDiv.appendChild(row2);
+
+  // Overall Result
+  if(overallObtained>0 && years.filter(y => y.keys.some(k => Number(form.elements[k].value)>0)).length > 1){
+    const finalPercent = (overallObtained/overallMax)*100;
+    let finalDiv = "", finalClass = "";
+    if(overallFail){ finalDiv="Fail"; finalClass="fail-division"; }
+    else if(finalPercent>=75){ finalDiv="Distinction"; finalClass="distinction"; }
+    else if(finalPercent>=60){ finalDiv="First Division"; finalClass="first"; }
+    else if(finalPercent>=45){ finalDiv="Second Division"; finalClass="second"; }
+    else if(finalPercent>=35){ finalDiv="Third Division"; finalClass="third"; }
+
+    const finalCard = document.createElement("div");
+finalCard.className = "division-box";
+finalCard.style.flexDirection = "column"; // keep items stacked neatly
+finalCard.innerHTML = `
+  <div style="text-align:center; font-weight:bold; margin-bottom:5px;">Overall Result</div>
+  <div style="display:flex; flex-wrap:wrap; justify-content:center; gap:15px;">
+    <span>Total Marks: ${overallObtained} / ${overallMax}</span>
+    <span>Percentage: ${finalPercent.toFixed(2)}%</span>
+    <span>Division: <span class="${finalClass}">${finalDiv}</span></span>
+  </div>
+`;
+resultDiv.appendChild(finalCard);
+  }
+});
+</script>
+<footer style="text-align:center; margin-top:20px; font-size:12px; color:#555;">
+  &copy; 2025 Mohit Gautam | BBS Result Calculator | <a href="https://mohitgautam.com.np" style="color:#555; text-decoration:none;">www.mohitgautam.com.np</a>
+</footer>
+</body>
+</html>
